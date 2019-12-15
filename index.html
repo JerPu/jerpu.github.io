@@ -8,29 +8,53 @@
 <!--Setting the styles, ie. white text for the dark background, using CSS-->
 <head>
 <link rel="stylesheet" type="text/css" href="SiteStyles.css" />
+<style> <!-- For the drag & drop boxes -->
+#div1, #div2 {
+  float: left;
+  width: 128px;
+  height: 128px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
+</style>
+<script><!--Drag&drop -code-->
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
 </head>
 
 <!--Header (ofc)-->
 <header>
 <h1>THE TRASH ZONE</h1> </br>
 <h1>A website of garbage code</h1>
-<h2>Created to show some mandatory bad HTML skills</h2>
+<h2>Created to show some mandatory bad HTML skills</h2> <!--I feel kinda bad that GitHub has to host this garbage on their servers, taking up space...-->
 <hr/>
 </header>
 
 
-
 <body bgcolor="gray">
 <!-- Images, written to be inside a table in order to center and resize on all aspect ratios.-->
-<!--The shown images are buttons-->
+<!-- The shown images are buttons -->
 <br/>
 <table style = "margin:auto;" frame = "void">
 <tr>
-<td> <a href="https://google.com"> <img src="img/placeholder_img.png" width="80%"/> </a> </td>
-<td> <a href="https://google.com"> <img src="img/placeholder_img.png" width="80%"/> </a> </td>
-<td> <a href="https://google.com"> <img src="img/placeholder_img.png" width="80%"/> </a> </td>
+<td> <a href="https://google.com"> <img src="media/placeholder_img.png" width="80%"/> </a> </td>
+<td> <a href="https://google.com"> <img src="media/placeholder_img.png" width="80%"/> </a> </td>
+<td> <a href="https://google.com"> <img src="media/placeholder_img.png" width="80%"/> </a> </td>
 </tr>
-<table>
+</table>
 <br/>
 
 <ul>
@@ -39,14 +63,61 @@
   <li>List item kolme</li>
 </ul>
 
-<!--Clock-->
-<button type="button"
-	onclick="document.getElementById('demo').innerHTML = Date()">
-	Klikkaa tähän nähdäksesi kellonajan.
-</button>
-<p id="demo"></p>
+<!-- Geolocation -->
 
-<!-- Footer -->
+<button onclick="getLocation()">Klikkaa tähän nähdäksesi sijantisi</button>
+<p id="SijaintiFinal"></p>
+
+<script>
+var SijaintiTeksti = document.getElementById("SijaintiFinal");
+
+function getLocation()
+{
+  if (navigator.geolocation)
+  {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+  else
+  { 
+    SijaintiTeksti.innerHTML = "Selain ei tue sijainninhakua.";
+  }
+}
+
+function showPosition(sijainti)
+{
+  SijaintiTeksti.innerHTML = "Leveysasteet: " + sijainti.coords.latitude + 
+  "<br>Pituusasteet: " + sijainti.coords.longitude;
+}
+</script>
+
+
+<!-- Clock-button -->
+<button type="button"
+	onclick="document.getElementById('Kello').innerHTML = Date()">
+	Klikkaa tähän nähdäksesi kellonajan
+</button>
+<p id="Kello" draggable="true"></p>
+
+
+<!--Drag & drop JavaScript-helvetti (EI TOIMI)-->
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+	<video controls loop autoplay width="320" height="320">
+	<source src="media/ThonkSpinner.mp4" type="video/mp4" draggable="true" ondragstart="drag(event)" id="drag1">
+	Your browser does not support the video tag.
+	</video>
+</div>
+<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+
+<!--Audio (CC BY-SA 3.0)-->
+<br/><audio controls>
+  <source src="https://upload.wikimedia.org/wikipedia/commons/3/31/Virgin_Galactic.ogg" type="audio/ogg">
+	Your browser does not support the audio element.
+</audio>
+<p>(Audio by S_Whistler, from <a href="https://en.wikipedia.org/wiki/File:Virgin_Galactic.ogg"> en.wikipedia.org.</a> <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en"> CC BY-SA 3.0 </a>)</p>
+
+
+<!-- Footer (käytännössä)-->
 <br/><br/><br/>
 For further garbage, see <a href="https://sieni.es">this website</a> (not mine so I take no responsibility for its contents).
 <br/>
