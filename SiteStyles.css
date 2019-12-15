@@ -1,2 +1,3 @@
-h1 { color:LightGray; }
-body, p { color:Black; }
+h1, h2, h3 { color: #f2f2f2; }
+body, p { color: white; }
+<body style="background-color: #262626">
